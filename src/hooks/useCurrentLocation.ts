@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GeolocationReturnType } from 'react-native';
-
+import Geolocation from '@react-native-community/geolocation';
 type Coords = Partial<GeolocationReturnType>;
 
 export default (): Coords | null => {
@@ -8,7 +8,7 @@ export default (): Coords | null => {
 
    const geolocationAPI = (options = {}): Promise<GeolocationReturnType> => {
       return new Promise((resolve, reject) => {
-         navigator.geolocation.getCurrentPosition(resolve, reject, options);
+         Geolocation.getCurrentPosition(resolve, reject, options);
       });
    };
 
