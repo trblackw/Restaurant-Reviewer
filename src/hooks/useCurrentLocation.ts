@@ -1,30 +1,28 @@
 import { useState, useEffect } from 'react';
-import { GeolocationReturnType } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-type Coords = Partial<GeolocationReturnType>;
 
-export default (): Coords | null => {
-   const [location, setLocation] = useState<Coords | null>(null);
+type Coordinates = { latitude: number, longitude: number };
 
-   const geolocationAPI = (options = {}): Promise<GeolocationReturnType> => {
-      return new Promise((resolve, reject) => {
-         Geolocation.getCurrentPosition(resolve, reject, options);
-      });
-   };
+export default (): Coordinates | null => {
+   const [location, setLocation] = useState<Coordinates | null>(null);
+
+   const onLocationChange = ({ coords }: { coords: Coordinates }) => {
+      setLocation({
+         latitude: coords.latitude,
+         longitude: coords.longitude
+      })
+   }
 
    useEffect(() => {
-      (async () => {
-         if (navigator) {
-            try {
-               const { coords } = await geolocationAPI();
-               setLocation({ lat: coords.latitude, lng: coords.longitude } as Partial<Coords>);
-            } catch (error) {
-               console.error(error);
-               setLocation(null);
-            }
+      try {
+         const watcher = Geolocation.watchPosition(onLocationChange);
+         return () => {
+            Geolocation.clearWatch(watcher)
          }
-      })();
-   }, []);
+      } catch (error) {
+         console.error(error);
+      }
+   }, [])
 
    return location;
 };
