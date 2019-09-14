@@ -7,18 +7,21 @@ import uuid from 'uuid';
 import { LocationContext } from '../App';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { State } from '../store';
-import * as actions from '../actions';
+import Search from '../components/Search';
+import { fetchEstablishments } from '../actions';
+import useNavigation from '../hooks/useNavigation';
 
 const Establishments: React.FC = (): JSX.Element => {
-   const dispatch = useDispatch();
-   const establishments: Establishment[] = useSelector(({ establishments }: State) => establishments, shallowEqual);
-   const search: string = useSelector(({ search }: State) => search, shallowEqual);
-   const userLocation = useContext(LocationContext);
+   const dispatch = useDispatch(),
+   establishments: Establishment[] = useSelector(({ establishments }: State) => establishments, shallowEqual),
+   search: string = useSelector(({ search }: State) => search),
+   userLocation = useContext(LocationContext),
+   navigation = useNavigation();
 
    useEffect(
       () => {
          if (userLocation) {
-            dispatch(actions.fetchEstablishments(userLocation));
+            dispatch(fetchEstablishments(userLocation));
          }
       },
       [userLocation]
@@ -26,6 +29,7 @@ const Establishments: React.FC = (): JSX.Element => {
    return (
       <ViewContainer>
          <ViewHeader>Establishments</ViewHeader>
+         <Search />
          <FlatList
             data={establishments.filter(establishment => new RegExp(search, 'ig').test(establishment.name))}
             renderItem={({ item, index }) => <EstablishmentPreview name={item.name} index={index} />}
