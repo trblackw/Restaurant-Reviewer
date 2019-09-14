@@ -1,4 +1,3 @@
-import useCurrentLocation from './hooks/useCurrentLocation';
 import { Coordinates } from './types';
 
 export enum EndPoints {

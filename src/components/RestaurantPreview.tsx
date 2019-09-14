@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { View, Text, TouchableHighlight } from 'react-native';
 import { Restaurant } from '../types';
-// b80a51fb71c77dec30df59dff753eda5
 interface Props extends Restaurant {
    index: number;
+   address: string;
 }
 
 const RestaurantPreview = ({ name, address, index }: Props): JSX.Element => {

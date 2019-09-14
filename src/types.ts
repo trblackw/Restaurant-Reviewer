@@ -1,3 +1,7 @@
+import { State } from './store';
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
+
 export interface Restaurant {
    id: string;
    name: string;
@@ -198,3 +202,13 @@ export interface SearchResults {
    results_shown: string;
    restaurants: Restaurant[];
 }
+
+
+/**
+ * ACTIONS
+ */
+
+ //types are distinguished by having/not having args to avoid extra null check step in action creators
+export type ThunkWithArgs<A, P> = (args: A) => ThunkAction<Promise<{ type: string; payload: P }>, State, void, AnyAction>;
+
+export type ThunkNoArgs<P> = () => ThunkAction<Promise<{ type: string; payload: P }>, State, void, AnyAction>;
