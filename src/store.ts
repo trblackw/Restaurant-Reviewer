@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'remote-redux-devtools';
 import update from 'immutability-helper';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
@@ -7,7 +7,7 @@ import { EndPoints as StateKeys } from './http';
 import * as APITypes from './types';
 import * as constants from './constants';
 
-const middleware = [logger, thunk];
+const middleware = [thunk];
 
 export interface State {
    [StateKeys.categories]: APITypes.Category[];
