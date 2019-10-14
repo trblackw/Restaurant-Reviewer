@@ -22,8 +22,8 @@ const EstablishmentInfo: React.FC = (): JSX.Element => {
       setLoading(true);
       (async () => {
          const establishmentId: string | null = navigation.getParam(NavParams.establishmentId);
-         if (!establishmentId) {
-            return setLoading(false);
+         if (establishmentId && userLocation) {
+            
          }
          userLocation && (await dispatch(fetchAllRelatedEstablishments([userLocation, { establishment_type: establishmentId }])));
          console.log('TCL: searchResults', searchResults);
