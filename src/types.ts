@@ -37,7 +37,7 @@ export interface Restaurant {
 }
 
 export interface Establishment {
-   id: number;
+   id?: number | string;
    name: string;
 }
 
@@ -187,8 +187,8 @@ interface User {
    profile_image: string;
 }
 export interface Collection {
-   collection_id: number;
-   res_count: number;
+   id: number | string;
+   res_count: number | string;
    image_url: string;
    url: string;
    title: string;
@@ -203,12 +203,28 @@ export interface SearchResults {
    restaurants: Restaurant[];
 }
 
+/**
+ * VIEWS
+ */
+
+export enum Views {
+   Establishments = 'Establishments',
+   EstablishmentInfo = 'EstablishmentInfo',
+   Cuisines = 'Cuisines',
+   CuisineInfo = 'CuisineInfo',
+   Collections = 'Collections',
+   CollectionInfo = 'CollectionInfo'
+}
+
+export enum NavParams {
+   establishmentId = 'establishmentId'
+}
 
 /**
  * ACTIONS
  */
 
  //types are distinguished by having/not having args to avoid extra null check step in action creators
-export type ThunkWithArgs<A, P> = (args: A) => ThunkAction<Promise<{ type: string; payload: P }>, State, void, AnyAction>;
+export type ThunkWithArgs<A, P> = (...args: A[]) => ThunkAction<Promise<{ type: string; payload: P }>, State, void, AnyAction>;
 
 export type ThunkNoArgs<P> = () => ThunkAction<Promise<{ type: string; payload: P }>, State, void, AnyAction>;
