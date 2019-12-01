@@ -33,7 +33,7 @@ const EstablishmentStack = createStackNavigator({
 
 const Tabs = createBottomTabNavigator({
    [Views.Establishments]: { screen: EstablishmentStack },
-   [Views.Cuisines]: { screen: Cuisines },
+[Views.Cuisines]: { screen: Cuisines },
    [Views.Collections]: { screen: Collections },
 });
 // @ts-ignore
